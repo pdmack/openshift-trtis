@@ -1,0 +1,29 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "PersistentVolume",
+            "metadata": {
+                "labels": {
+                    "type": "local"
+                },
+                "name": "models-volume",
+                "namespace": "trtis"
+            },
+            "spec": {
+                "accessModes": [
+                    "ReadWriteOnce"
+                ],
+                "capacity": {
+                    "storage": "1Gi"
+                },
+                "hostPath": {
+                    "path": "/tmp/trtis-models",
+                    "type": ""
+                }
+            }
+        }
+    ],
+    "kind": "List"
+}
