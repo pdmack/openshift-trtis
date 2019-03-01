@@ -118,12 +118,26 @@
                            "limits":{
                               "nvidia.com/gpu":1
                            }
-                        }
+                        },
+                        "imagePullSecrets":[
+                           {
+                              "name":"ngc"
+                           }
+                        ],
+                        "volumeMounts":[
+                           {
+                              "mountPath":"/models",
+                              "name":"models-volume"
+                           }
+                        ]
                      }
                   ],
-                  "imagePullSecrets":[
+                  "volumes":[
                      {
-                        "name":"ngc"
+                        "name":"models-volume",
+                        "persistentVolumeClaim":{
+                           "claimName":"trtis-models"
+                        }
                      }
                   ]
                }

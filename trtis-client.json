@@ -1,0 +1,22 @@
+{
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": {
+        "name": "trtis-client",
+        "namespace": "trtis"
+    },
+    "spec": {
+        "containers": [
+            {
+                "args": [
+                    "infinity"
+                ],
+                "command": [
+                    "sleep"
+                ],
+                "image": "quay.io/pdmack/tensorrtserver_clients:r19.01-py3.5",
+                "name": "trtis-client"
+            }
+        ]
+    }
+}
