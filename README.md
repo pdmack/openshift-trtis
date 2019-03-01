@@ -29,4 +29,4 @@ Launch the pre-built client image
 
 Check that the server is healthy and models are ready to be served for inference
 
-`oc exec trtis-client curl http://inference-server.trtis.svc.cluster.local:8000/api/status`
+`oc exec trtis-client curl http://inference-server:8000/api/status`
