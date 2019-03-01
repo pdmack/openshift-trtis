@@ -9,7 +9,7 @@ Set up a local hostPath model storage
 
 `mkdir -p /tmp/trtis-models && chmod 777 /tmp/trtis-models`
 
-Download the models and copy them to the local storage
+Download the models and copy them to the local storage. This step and the following may be modified to suit available PV or StorageClass options.
 
 `sh fetch_models.sh && cp -R model_repository/* /tmp/trtis-models`
 
