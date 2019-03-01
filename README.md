@@ -1,10 +1,12 @@
 # openshift-trtis
 OpenShift deployment for TensorRT Inference Server and client pod
 
-Requirements
+## Requirements
 
 * NVIDIA Tesla GPU (Pascal or Volta)
 * OpenShift 3.11 with [a properly configured CUDA and nvidia-device-plugin node installation](https://blog.openshift.com/how-to-use-gpus-with-deviceplugin-in-openshift-3-10/)
+
+## Install
 
 Create the project
 
@@ -36,6 +38,7 @@ Check that the server is healthy and models are ready to be served for inference
 
 `oc rsh trtis-client curl -s http://inference-server:8000/api/status`
 
+## Testing
 If everything looks good, use the client to exercise the server.
 
 `oc rsh trtis-client /bin/bash`
