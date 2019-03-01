@@ -34,7 +34,7 @@ Launch the pre-built client image
 
 Check that the server is healthy and models are ready to be served for inference
 
-`oc rsh trtis-client -- curl -s http://inference-server:8000/api/status`
+`oc rsh trtis-client curl -s http://inference-server:8000/api/status`
 
 If everything looks good, use the client to exercise the server.
 
