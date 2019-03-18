@@ -53,6 +53,12 @@ objects:
           command:
           - trtserver
           image: nvcr.io/nvidia/tensorrtserver:19.01-py3
+          livenessProbe:
+            httpGet:
+              path: /api/health/live
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
           name: inference-server
           ports:
           - containerPort: 8000
