@@ -16,6 +16,10 @@ Set up a local hostPath model storage. This step and the following may be modifi
 
 `mkdir -p /tmp/trtis-models && chmod 777 /tmp/trtis-models`
 
+With selinux enabled, we need to relabel our hostpath
+
+`chcon -R -u system_u -r object_r -t svirt_sandbox_file_t -l s0 /tmp/trtis-models`
+
 Download the models and copy them to the local storage
 
 `sh fetch_models.sh && cp -R model_repository/* /tmp/trtis-models`

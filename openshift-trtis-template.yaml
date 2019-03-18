@@ -5,7 +5,7 @@ metadata:
   annotations:
     description: Template for deploying NVIDIA TensorRT Inference Server on OpenShift.
     openshift.io/display-name: NVIDIA TensorRT Inference Server
-    iconClass: "icon-nvidia"
+    iconClass: "icon-openshift"
     tags: ml,ai,tensorrt,inference
 objects:
 - apiVersion: v1
@@ -61,6 +61,12 @@ objects:
             protocol: TCP
           - containerPort: 8002
             protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /api/health/ready
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
           resources:
             limits:
               nvidia.com/gpu: "1"
