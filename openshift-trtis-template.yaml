@@ -1,0 +1,89 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: openshift-trtis-template
+  annotations:
+    description: Template for deploying NVIDIA TensorRT Inference Server on OpenShift.
+    openshift.io/display-name: NVIDIA TensorRT Inference Server
+    iconClass: "icon-nvidia"
+    tags: ml,ai,tensorrt,inference
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: inference-server
+    name: inference-server
+    namespace: trtis
+  spec:
+    ports:
+    - name: http-inference-server
+      port: 8000
+      protocol: TCP
+      targetPort: 8000
+    - name: grpc-inference-server
+      port: 8001
+      protocol: TCP
+      targetPort: 8001
+    - name: metrics-inference-server
+      port: 8002
+      protocol: TCP
+      targetPort: 8002
+    selector:
+      app: inference-server
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: inference-server
+    name: inference-server-v1
+    namespace: trtis
+  spec:
+    selector:
+      matchLabels:
+        app: inference-server
+    template:
+      metadata:
+        labels:
+          app: inference-server
+      spec:
+        containers:
+        - args:
+          - --model-store=/models
+          command:
+          - trtserver
+          image: nvcr.io/nvidia/tensorrtserver:19.01-py3
+          name: inference-server
+          ports:
+          - containerPort: 8000
+            protocol: TCP
+          - containerPort: 8001
+            protocol: TCP
+          - containerPort: 8002
+            protocol: TCP
+          resources:
+            limits:
+              nvidia.com/gpu: "1"
+          volumeMounts:
+          - mountPath: /models
+            name: models-volume
+        volumes:
+        - name: models-volume
+          persistentVolumeClaim:
+            claimName: trtis-models
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    labels:
+      app: inference-server
+    name: inference-server
+    namespace: trtis
+  spec:
+    host: inference-server-trtis.router.default.svc.cluster.local
+    port:
+      targetPort: http-inference-server
+    to:
+      kind: Service
+      name: inference-server
+      weight: 100
+      wildcardPolicy: None
